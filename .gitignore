@@ -1,0 +1,68 @@
+﻿# .gitignore for ASP.NET Core project with EF Core and SQL Server
+
+# Visual Studio and Rider
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.csproj.user
+
+# Build and Publish
+bin/
+obj/
+**/PublishProfiles/
+
+# Logs and Debugging
+*.log
+*.vspscc
+*.vsp
+
+# Generated Files
+*.dll
+*.exe
+*.pdb
+*.cache
+*.dbmdl
+
+# Migrations and Database
+*.mdf
+*.ldf
+*.sqlite
+*.db
+Migrations/
+
+# User and Secrets Configuration
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+.env
+
+# Packages and Dependencies
+node_modules/
+wwwroot/lib/
+
+# IDE and System
+*.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+*.dockerignore
+
+# Git
+!.gitignore
+
+# Notes or Temporary Files
+*.bak
+*.tmp
+*.swp
+
+# Tests and Reports
+TestResults/
+coverage/
+*.trx
+*.coverage
+
+# Respect security and privacy standards
