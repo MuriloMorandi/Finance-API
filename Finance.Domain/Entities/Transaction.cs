@@ -1,8 +1,9 @@
-﻿using Finance.Domain.Enums;
+﻿using Finance.Domain.Common;
+using Finance.Domain.Enums;
 
 namespace Finance.Domain.Entities;
 
-public class Transaction
+public class Transaction : BaseAuditableEntity
 {
     public Guid Id { get; set; }
     public string Description { get; set; }
