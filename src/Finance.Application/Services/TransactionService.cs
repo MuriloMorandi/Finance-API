@@ -1,4 +1,5 @@
-﻿using Finance.Domain.Entities;
+﻿using Finance.Application.DTOs;
+using Finance.Domain.Entities;
 using Finance.Domain.Interfaces;
 
 namespace Finance.Application.Services;
@@ -16,6 +17,16 @@ public class TransactionService
     {
         // Adicionar validações aqui
         transaction.Created = DateTime.Now;
+        if (transaction.Amount <= 0)
+        {
+            throw new Exception("Amount must be greater than zero");
+        }
+
+        if (transaction.Description.Trim() == String.Empty)
+        {
+            throw new Exception("Description is required");
+        }
+        
         await _transactionRepository.AddTransactionAsync(transaction);
     }
     
@@ -31,9 +42,12 @@ public class TransactionService
         return await _transactionRepository.GetAllTransactionsAsync();
     }
     
-    public async Task<Transaction?> GetTransactionByIdAsync(Guid id)
+    public async Task<TransactionDTO?> GetTransactionByIdAsync(Guid id)
     {
-        return await _transactionRepository.GetTransactionByIdAsync(id);
+        var  ret  = await _transactionRepository.GetTransactionByIdAsync(id);
+        if (ret != null) return new TransactionDTO(ret);;
+
+        return null;
     }
     
     public async Task DeleteTransactionAsync(Guid id)

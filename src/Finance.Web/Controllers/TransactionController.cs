@@ -18,8 +18,15 @@ public class TransactionController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTransaction([FromBody] Transaction? transaction)
     {
-        await _transactionService.AddTransactionAsync(transaction);
-        return Ok("Transaction created successfully!");
+        try
+        {
+            await _transactionService.AddTransactionAsync(transaction);
+            return Ok("Transaction created successfully!");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpPatch]
