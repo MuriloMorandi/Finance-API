@@ -1,5 +1,6 @@
 ﻿using Finance.Domain.Interfaces;
 using Finance.Domain.Entities;
+using Finance.Domain.Interfaces.Common;
 using Finance.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,29 +15,33 @@ public class TransactionRepository : ITransactionRepository
         _context = context;
     }
 
-    public async Task AddTransactionAsync(Transaction? transaction)
+    public async Task AddAsync(Transaction? transaction)
     {
         _context.Transactions.Add(transaction);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Transaction?>> GetAllTransactionsAsync()
+    public async Task<BaseGetAll<Transaction>> GetAllAsync()
     {
-        return await _context.Transactions.ToListAsync();
+        var ret = new BaseGetAll<Transaction>();
+        ret.data = await _context.Transactions.ToListAsync();
+        ret.totalData = await _context.Transactions.CountAsync();
+        
+        return ret;
     }
 
-    public async Task<Transaction?> GetTransactionByIdAsync(Guid id)
+    public async Task<Transaction?> GetByIdAsync(Guid id)
     {
         return await _context.Transactions.FindAsync(id);
     }
 
-    public async Task UpdateTransactionAsync(Transaction transaction)
+    public async Task UpdateAsync(Transaction transaction)
     {
         _context.Transactions.Update(transaction);
         await _context.SaveChangesAsync();
     }
 
-    public async  Task DeleteTransactionAsync(Guid id)
+    public async  Task DeleteAsync(Guid id)
     {
         var transaction = await _context.Transactions.FindAsync(id);
         if (transaction != null)
