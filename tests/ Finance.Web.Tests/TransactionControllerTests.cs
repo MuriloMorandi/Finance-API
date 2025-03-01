@@ -5,7 +5,7 @@ using Finance.Domain.Entities;
 using Finance.Domain.Enums;
 using Finance.Application.DTOs;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Newtonsoft.Json;
 using Xunit;
 
 public class TransactionControllerTests : IClassFixture<WebApplicationFactory<Program>>
@@ -20,7 +20,7 @@ public class TransactionControllerTests : IClassFixture<WebApplicationFactory<Pr
     [Fact]
     public async Task PostTransaction_ShouldReturnOk()
     {
-        var transaction = new TransactionDTO("description",10,DateTime.Now,"Credit");
+        var transaction = "{  \"description\": \"Payment for Invoice #124\",  \"amount\": 100.00,  \"date\": \"2024-02-24\",  \"type\": 1}"; 
         
         var response = await _client.PostAsJsonAsync("/api/transaction", transaction);
         

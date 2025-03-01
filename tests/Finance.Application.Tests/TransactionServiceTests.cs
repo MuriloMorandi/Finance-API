@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Moq;
+﻿using Moq;
 using Xunit;
 using FluentAssertions;
 
@@ -9,6 +7,7 @@ using Finance.Domain.Entities;
 using Finance.Domain.Enums;
 using Finance.Domain.Interfaces;
 
+namespace Finance.Application.Tests;
 
 public class TransactionServiceTests
 {
@@ -39,7 +38,7 @@ public class TransactionServiceTests
     }
     
     [Fact]
-    public async Task Created_ShouldFail_WhenAmountIsZeroOrNegative()
+    public async Task Created_ShouldFail_WhenAmountIsZero()
     {
         var transaction = new Transaction
         {
@@ -58,6 +57,26 @@ public class TransactionServiceTests
         _mockRepo.Verify(r => r.AddTransactionAsync(It.IsAny<Transaction>()), Times.Never);
     }
     
+    [Fact]
+    public async Task Created_ShouldFail_WhenAmountIsNegative()
+    {
+        var transaction = new Transaction
+        {
+            Id = Guid.NewGuid(),
+            Description = "Depósito",
+            Amount = -10,
+            Date = DateTime.UtcNow,
+            Type = TransactionType.Debit
+        };
+
+        Func<Task> act = async () => await _service.AddTransactionAsync(transaction);
+
+        await act.Should().ThrowAsync<Exception>()
+            .WithMessage("Amount must be greater than zero");
+        
+        _mockRepo.Verify(r => r.AddTransactionAsync(It.IsAny<Transaction>()), Times.Never);
+    }
+
     [Fact]
     public async Task Created_ShouldFail_WhenDescriptionIsEmpty()
     {
@@ -98,7 +117,26 @@ public class TransactionServiceTests
     }
     
     [Fact]
-    public async Task Update_ShouldFail_WhenAmountIsZeroOrNegative()
+    public async Task Update_ShouldFail_WhenAmountIsZero()
+    {
+        var transaction = new Transaction
+        {
+            Id = Guid.NewGuid(),
+            Description = "Updated Payment",
+            Amount = 150,
+            Date = DateTime.UtcNow,
+            Type = TransactionType.Credit
+        };
+
+        _mockRepo.Setup(r => r.UpdateTransactionAsync(transaction)).Returns(Task.CompletedTask);
+
+        await _service.UpdateTransactionAsync(transaction);
+
+        _mockRepo.Verify(r => r.UpdateTransactionAsync(transaction), Times.Once);
+    }
+    
+    [Fact]
+    public async Task Update_ShouldFail_WhenAmountIsNegative()
     {
         var transaction = new Transaction
         {

@@ -1,5 +1,7 @@
 ﻿using System.Net;
 
+namespace Finance.Web.Middlewares;
+
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;

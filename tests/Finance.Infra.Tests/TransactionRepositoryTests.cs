@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Xunit;
 using FluentAssertions;
 
-
 namespace Finance.Infra.Tests;
 
 public class TransactionRepositoryTests
