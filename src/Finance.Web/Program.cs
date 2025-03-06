@@ -2,6 +2,7 @@ using Finance.Application.Services;
 using Finance.Domain.Interfaces;
 using Finance.Infra.Persistence;
 using Finance.Infra.Repositories;
+using Finance.Web.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,10 +32,11 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
+
+public partial class Program { }  
