@@ -23,12 +23,12 @@ Sistema de gestão financeira
 
 ### 🏗️ Gerar uma Migration
 ```bash
-  dotnet ef migrations add NomeDaMigration --project Finance.Infra --startup-project Finance.Web 
+  dotnet ef migrations add NomeDaMigration --project src/Finance.Infra --startup-project src/Finance.Web 
 ```
 
 ### 📂 Atualizar o Banco de Dados
 ```bash
-  dotnet ef database update --project Finance.Infra  --startup-project Finance.Web
+  dotnet ef database update --project src/Finance.Infra  --startup-project src/Finance.Web
 ```
 
 

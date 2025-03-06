@@ -1,6 +1,6 @@
 ﻿namespace Finance.Domain.Enums;
 
-public enum TransactionType
+public enum TransactionTypeEnum
 {
     Credit = 1,
     Debit = 2
