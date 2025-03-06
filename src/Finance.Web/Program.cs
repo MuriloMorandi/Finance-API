@@ -11,7 +11,10 @@ builder.Services.AddDbContext<FinanceDbContext>(options =>
 
 // Configurar dependências
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<ITransactionCategoryRepository, TransactionCategoryRepository>();
+
 builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<TransactionCategoryService>();
 
 // Add services to the container.
 
